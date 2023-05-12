@@ -38,7 +38,6 @@ class Store {
    * @returns {Object}
    */
   getState() {
-    console.log(this.state);
     return this.state;
   }
 
@@ -67,6 +66,7 @@ class Store {
         {
           code,
           title: 'Новая запись',
+          selectCounter: 0,
         },
       ],
 
