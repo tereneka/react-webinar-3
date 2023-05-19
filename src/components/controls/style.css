@@ -3,3 +3,12 @@
   justify-content: flex-end;
   padding: 20px;
 }
+
+.Controls-cart {
+  font-size: 18px;
+}
+
+.Controls-cart_selected {
+  font-weight: 700;
+  padding: 0 20px 0 15px;
+}

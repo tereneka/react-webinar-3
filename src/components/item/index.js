@@ -1,36 +1,25 @@
-import React, {useState} from "react";
-import PropTypes from "prop-types";
-import {plural} from "../../utils";
+import React from 'react';
+import PropTypes from 'prop-types';
 import './style.css';
 
-function Item(props){
-
-  // Счётчик выделений
-  const [count, setCount] = useState(0);
-
-  const callbacks = {
-    onClick: () => {
-      props.onSelect(props.item.code);
-      if (!props.item.selected) {
-        setCount(count + 1);
-      }
-    },
-    onDelete: (e) => {
-      e.stopPropagation();
-      props.onDelete(props.item.code);
-    }
-  }
-
+function Item(props) {
   return (
-    <div className={'Item' + (props.item.selected ? ' Item_selected' : '')}
-         onClick={callbacks.onClick}>
-      <div className='Item-code'>{props.item.code}</div>
+    <div className='Item'>
+      <div className='Item-code'>
+        {props.item.code}
+      </div>
       <div className='Item-title'>
-        {props.item.title} {count ? ` | Выделяли ${count} ${plural(count, {one: 'раз', few: 'раза', many: 'раз'})}` : ''}
+        {props.item.title}
+      </div>
+      <div className='Item-content'>
+        {props.getItemContent(props.item)}
       </div>
       <div className='Item-actions'>
-        <button onClick={callbacks.onDelete}>
-          Удалить
+        <button
+          onClick={() => {
+            props.onClick(props.item.code);
+          }}>
+          {props.btnText}
         </button>
       </div>
     </div>
@@ -42,15 +31,17 @@ Item.propTypes = {
     code: PropTypes.number,
     title: PropTypes.string,
     selected: PropTypes.bool,
-    count: PropTypes.number
+    count: PropTypes.number,
   }).isRequired,
-  onDelete: PropTypes.func,
-  onSelect: PropTypes.func
+  btnText: PropTypes.string,
+  onClick: PropTypes.func,
+  getItemContent: PropTypes.func,
 };
 
 Item.defaultProps = {
-  onDelete: () => {},
-  onSelect: () => {},
-}
+  btnText: 'Кнопка',
+  onClick: () => {},
+  getItemContent: () => {},
+};
 
 export default React.memo(Item);
