@@ -45,13 +45,3 @@
   line-height: 37px;
   margin: 0;
 }
-
-.Popup-total {
-  display: flex;
-  justify-content: flex-end;
-  gap: 53px;
-  padding-right: 110px;
-  margin-top: 20px;
-  font-weight: 700;
-  font-size: 18px;
-}

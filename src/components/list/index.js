@@ -8,6 +8,7 @@ function List({
   itemBtnText,
   onItemBtnClick,
   getItemContent,
+  total,
 }) {
   return (
     <div className='List'>
@@ -23,6 +24,13 @@ function List({
           />
         </div>
       ))}
+
+      {total !== undefined && (
+        <div className='List-total'>
+          <span>Итого</span>
+          <span>{total} ₽</span>
+        </div>
+      )}
     </div>
   );
 }
@@ -36,12 +44,14 @@ List.propTypes = {
   itemBtnText: PropTypes.string,
   onItemBtnClick: PropTypes.func,
   getItemContent: PropTypes.func,
+  total: PropTypes.string,
 };
 
 List.defaultProps = {
   itemBtnText: 'Кнопка',
   onItemBtnClick: () => {},
   getItemContent: () => {},
+  total: undefined,
 };
 
 export default React.memo(List);

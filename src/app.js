@@ -92,11 +92,8 @@ function App({ store }) {
           getItemContent={
             callbacks.getCartListItemContent
           }
+          total={cartSum}
         />
-        <div className='Popup-total'>
-          <span>Итого</span>
-          <span>{cartSum} ₽</span>
-        </div>
       </Popup>
     </PageLayout>
   );

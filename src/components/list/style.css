@@ -1,7 +1,16 @@
-.List{
-
+.List {
 }
 
 .List-item {
   border-bottom: 1px dashed #ccc;
+}
+
+.List-total {
+  display: flex;
+  justify-content: flex-end;
+  gap: 53px;
+  padding-right: 110px;
+  margin-top: 20px;
+  font-weight: 700;
+  font-size: 18px;
 }
