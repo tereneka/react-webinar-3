@@ -4,6 +4,8 @@ import Controls from './components/controls';
 import Head from './components/head';
 import PageLayout from './components/page-layout';
 import Popup from './components/popup';
+import CatalogItem from './components/catalogItem';
+import CartItem from './components/cartItem';
 
 /**
  * Приложение
@@ -38,25 +40,6 @@ function App({ store }) {
       [store]
     ),
 
-    getProductsListItemContent: function (item) {
-      return (
-        <span>{`${item.price.toLocaleString(
-          'ru-RU'
-        )} ₽`}</span>
-      );
-    },
-
-    getCartListItemContent: function (item) {
-      return (
-        <>
-          <span>{`${item.price.toLocaleString(
-            'ru-RU'
-          )} ₽`}</span>
-          <span>{`${item.count} шт`}</span>
-        </>
-      );
-    },
-
     onTogglePopup: useCallback(
       (bool) => {
         store.togglePopup(bool);
@@ -67,7 +50,7 @@ function App({ store }) {
 
   return (
     <PageLayout>
-      <Head title='Приложение на чистом JS' />
+      <Head title='Магазин' />
       <Controls
         cart={cart}
         cartSum={cartSum}
@@ -75,11 +58,8 @@ function App({ store }) {
       />
       <List
         list={list}
-        itemBtnText='Добавить'
-        onItemBtnClick={callbacks.onAddItem}
-        getItemContent={
-          callbacks.getProductsListItemContent
-        }
+        item={CatalogItem}
+        onAdd={callbacks.onAddItem}
       />
       <Popup
         isOpen={isPopupOpen}
@@ -87,12 +67,9 @@ function App({ store }) {
         closePopup={callbacks.onTogglePopup}>
         <List
           list={cart}
-          itemBtnText='Удалить'
-          onItemBtnClick={callbacks.onDeleteItem}
-          getItemContent={
-            callbacks.getCartListItemContent
-          }
+          item={CartItem}
           total={cartSum}
+          onDelete={callbacks.onDeleteItem}
         />
       </Popup>
     </PageLayout>

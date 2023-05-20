@@ -17,6 +17,7 @@ function Popup({
         <div className='Popup-head'>
           <h2 className='Popup-title'>{title}</h2>
           <button
+            className='Popup-btn'
             onClick={() => closePopup(false)}>
             Закрыть
           </button>

@@ -1,0 +1,37 @@
+.CatalogItem {
+  display: flex;
+  justify-content: flex-start;
+  transition: background-color 1s;
+}
+
+.CatalogItem_selected {
+  background: #75aaf1;
+  color: #fff;
+}
+
+.CatalogItem-code {
+  padding: 20px 10px 20px 20px;
+}
+
+.CatalogItem-title {
+  width: 100%;
+  padding: 20px 10px;
+}
+
+.CatalogItem-content {
+  display: flex;
+  gap: 62px;
+  font-size: 18px;
+  padding: 20px 14px 20px 10px;
+  white-space: nowrap;
+}
+
+.CatalogItem-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 20px 20px 10px;
+}
+
+.CatalogItem-btn {
+  min-width: 76px;
+}

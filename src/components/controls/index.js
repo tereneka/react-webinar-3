@@ -13,15 +13,21 @@ function Controls({
       <div className='Controls-cart'>
         В корзине:
         <span className='Controls-cart_selected'>
-          {`${cart.length} ${plural(cart.length, {
-            zero: 'товаров',
-            one: 'товар',
-            few: 'товара',
-            many: 'товаров',
-          })} / ${cartSum} ₽`}
+          {cart.length > 0
+            ? `${cart.length} ${plural(
+                cart.length,
+                {
+                  one: 'товар',
+                  few: 'товара',
+                  many: 'товаров',
+                }
+              )} / ${cartSum} ₽`
+            : 'пусто'}
         </span>
       </div>
-      <button onClick={() => openCartPopup(true)}>
+      <button
+        className='Controls-btn'
+        onClick={() => openCartPopup(true)}>
         Перейти
       </button>
     </div>
