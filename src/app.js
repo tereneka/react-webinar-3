@@ -6,6 +6,7 @@ import PageLayout from './components/page-layout';
 import Popup from './components/popup';
 import CatalogItem from './components/catalogItem';
 import CartItem from './components/cartItem';
+import Cart from './components/cart';
 
 /**
  * Приложение
@@ -65,13 +66,13 @@ function App({ store }) {
         isOpen={isPopupOpen}
         title='Корзина'
         closePopup={callbacks.onTogglePopup}>
-        <List
-          list={cart}
-          item={CartItem}
-          total={cartSum}
-          isScrolled={true}
-          onDelete={callbacks.onDeleteItem}
-        />
+        <Cart total={cartSum}>
+          <List
+            list={cart}
+            item={CartItem}
+            onDelete={callbacks.onDeleteItem}
+          />
+        </Cart>
       </Popup>
     </PageLayout>
   );

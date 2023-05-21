@@ -1,24 +1,6 @@
 .List {
 }
 
-.List-container {
-}
-
-.List-container_scrolled {
-  max-height: 60vh;
-  overflow-y: auto;
-}
-
 .List-item {
   border-bottom: 1px dashed #ccc;
-}
-
-.List-total {
-  display: flex;
-  justify-content: flex-end;
-  gap: 53px;
-  padding-right: 120px;
-  margin-top: 20px;
-  font-weight: 700;
-  font-size: 18px;
 }
