@@ -69,6 +69,7 @@ function App({ store }) {
           list={cart}
           item={CartItem}
           total={cartSum}
+          isScrolled={true}
           onDelete={callbacks.onDeleteItem}
         />
       </Popup>

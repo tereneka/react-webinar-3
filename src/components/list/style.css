@@ -1,6 +1,14 @@
 .List {
 }
 
+.List-container {
+}
+
+.List-container_scrolled {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
 .List-item {
   border-bottom: 1px dashed #ccc;
 }

@@ -4,19 +4,27 @@ import './style.css';
 
 function List({
   list,
-  total,
   item: Item,
+  total,
+  isScrolled,
   ...props
 }) {
   return (
     <div className='List'>
-      {list.map((item) => (
-        <div
-          key={item.code}
-          className='List-item'>
-          <Item item={item} {...props} />
-        </div>
-      ))}
+      <div
+        className={`List-container ${
+          isScrolled
+            ? 'List-container_scrolled'
+            : ''
+        }`}>
+        {list.map((item) => (
+          <div
+            key={item.code}
+            className='List-item'>
+            <Item item={item} {...props} />
+          </div>
+        ))}
+      </div>
 
       {total !== undefined && (
         <div className='List-total'>
@@ -36,10 +44,12 @@ List.propTypes = {
   ).isRequired,
   item: PropTypes.object,
   total: PropTypes.string,
+  isScrolled: PropTypes.bool,
 };
 
 List.defaultProps = {
   total: undefined,
+  isScrolled: false,
 };
 
 export default React.memo(List);
