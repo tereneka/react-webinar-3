@@ -5,15 +5,16 @@ import './style.css';
 function Popup({
   isOpen,
   title,
+  content,
+  footer,
   closePopup,
-  children,
 }) {
   return (
     <div
       className={`Popup ${
         isOpen ? 'Popup_open' : ''
       }`}>
-      <div className='Popup-content'>
+      <div className='Popup-container'>
         <div className='Popup-head'>
           <h2 className='Popup-title'>{title}</h2>
           <button
@@ -22,23 +23,27 @@ function Popup({
             Закрыть
           </button>
         </div>
-        {children}
+        <div className='Popup-content'>
+          {content}
+        </div>
+        <div className='Popup-footer'>
+          {footer}
+        </div>
       </div>
     </div>
   );
 }
 
 Popup.propTypes = {
-  isOpen: PropTypes.bool,
+  isOpen: PropTypes.bool.isRequired,
   title: PropTypes.string,
-  closePopup: PropTypes.func,
-  children: PropTypes.node,
+  content: PropTypes.node,
+  footer: PropTypes.node,
+  closePopup: PropTypes.func.isRequired,
 };
 
 Popup.defaultProps = {
-  isOpen: false,
-  title: 'Заголовок',
-  closePopup: () => {},
+  title: '',
 };
 
 export default React.memo(Popup);

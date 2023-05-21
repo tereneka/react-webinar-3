@@ -18,7 +18,7 @@
   visibility: visible;
 }
 
-.Popup-content {
+.Popup-container {
   background: #ffffff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -48,4 +48,9 @@
 
 .Popup-btn {
   min-width: 76px;
+}
+
+.Popup-content {
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
 }

@@ -22,7 +22,7 @@ List.propTypes = {
       code: PropTypes.number,
     })
   ).isRequired,
-  item: PropTypes.object,
+  item: PropTypes.object.isRequired,
 };
 
 export default React.memo(List);
