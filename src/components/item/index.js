@@ -4,6 +4,7 @@ import { cn as bem } from '@bem-react/classname';
 import { numberFormat } from '../../utils';
 import './style.css';
 import useLocale from '../../hooks/use-locale';
+import { Link } from 'react-router-dom';
 
 function Item(props) {
   const cn = bem('Item');
@@ -11,19 +12,18 @@ function Item(props) {
   const translator = useLocale();
 
   const callbacks = {
-    onAdd: (e) => props.onAdd(props.item._id),
-    openArticle: () =>
-      props.openArticle(props.item._id),
+    onAdd: () => props.onAdd(props.item._id),
   };
 
   return (
     <div className={cn()}>
       {/*<div className={cn('code')}>{props.item._id}</div>*/}
-      <div
-        className={cn('title')}
-        onClick={callbacks.openArticle}>
-        {props.item.title}
-      </div>
+      <Link to={props.url} className={cn('link')}>
+        <div className={cn('title')}>
+          {props.item.title}
+        </div>
+      </Link>
+
       <div className={cn('actions')}>
         <div className={cn('price')}>
           {numberFormat(props.item.price)} ₽
@@ -46,12 +46,10 @@ Item.propTypes = {
     price: PropTypes.number,
   }).isRequired,
   onAdd: PropTypes.func,
-  openArticle: PropTypes.func,
 };
 
 Item.defaultProps = {
   onAdd: () => {},
-  openArticle: () => {},
 };
 
 export default memo(Item);

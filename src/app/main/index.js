@@ -11,7 +11,6 @@ import List from '../../components/list';
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import Pagination from '../../components/pagination';
-import { useNavigate } from 'react-router-dom';
 import Container from '../../components/container';
 import Menu from '../../components/menu';
 import Locale from '../../components/locale';
@@ -30,8 +29,6 @@ function Main() {
   }));
 
   const translator = useLocale();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     store.actions.catalog.load(
@@ -59,11 +56,6 @@ function Main() {
         ),
       [store]
     ),
-    // Открытие страницы товара
-    openArticlePage: useCallback(
-      (id) => navigate(`/article/${id}`),
-      []
-    ),
     // Изменение языка
     changeLang: useCallback(
       (lang) =>
@@ -79,16 +71,11 @@ function Main() {
           <Item
             item={item}
             onAdd={callbacks.addToBasket}
-            openArticle={
-              callbacks.openArticlePage
-            }
+            url={`/article/${item._id}`}
           />
         );
       },
-      [
-        callbacks.addToBasket,
-        callbacks.openArticlePage,
-      ]
+      [callbacks.addToBasket]
     ),
   };
 

@@ -5,7 +5,6 @@ import ModalLayout from '../../components/modal-layout';
 import BasketTotal from '../../components/basket-total';
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
-import { useNavigate } from 'react-router';
 import useLocale from '../../hooks/use-locale';
 
 function Basket() {
@@ -19,8 +18,6 @@ function Basket() {
   }));
 
   const translator = useLocale();
-
-  const navigate = useNavigate();
 
   const callbacks = {
     // Удаление из корзины
@@ -36,11 +33,6 @@ function Basket() {
       () => store.actions.modals.close(),
       [store]
     ),
-    // Открытие страницы товара
-    openArticlePage: useCallback((id) => {
-      navigate(`/article/${id}`);
-      callbacks.closeModal();
-    }, []),
   };
 
   const renders = {
@@ -50,15 +42,14 @@ function Basket() {
           <ItemBasket
             item={item}
             onRemove={callbacks.removeFromBasket}
-            openArticle={
-              callbacks.openArticlePage
-            }
+            url={`/article/${item._id}`}
+            onLinkClick={callbacks.closeModal}
           />
         );
       },
       [
         callbacks.removeFromBasket,
-        callbacks.openArticlePage,
+        callbacks.closeModal,
       ]
     ),
   };

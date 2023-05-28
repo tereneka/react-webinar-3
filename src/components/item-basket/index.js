@@ -5,6 +5,7 @@ import { cn as bem } from '@bem-react/classname';
 import PropTypes from 'prop-types';
 import './style.css';
 import useLocale from '../../hooks/use-locale';
+import { Link } from 'react-router-dom';
 
 function ItemBasket(props) {
   const cn = bem('ItemBasket');
@@ -12,20 +13,22 @@ function ItemBasket(props) {
   const translator = useLocale();
 
   const callbacks = {
-    onRemove: (e) =>
+    onRemove: () =>
       props.onRemove(props.item._id),
-    openArticle: () =>
-      props.openArticle(props.item._id),
+    onLinkClick: () => props.onLinkClick(),
   };
 
   return (
     <div className={cn()}>
       {/*<div className={cn('code')}>{props.item._id}</div>*/}
-      <div
-        className={cn('title')}
-        onClick={callbacks.openArticle}>
-        {props.item.title}
-      </div>
+      <Link
+        to={props.url}
+        className={cn('link')}
+        onClick={callbacks.onLinkClick}>
+        <div className={cn('title')}>
+          {props.item.title}
+        </div>
+      </Link>
       <div className={cn('right')}>
         <div className={cn('cell')}>
           {numberFormat(props.item.price)} ₽
@@ -55,12 +58,12 @@ ItemBasket.propTypes = {
     amount: PropTypes.number,
   }).isRequired,
   onRemove: propTypes.func,
-  openArticle: PropTypes.func,
+  onLinkClick: PropTypes.func,
 };
 
 ItemBasket.defaultProps = {
   onRemove: () => {},
-  openArticle: () => {},
+  onLinkClick: () => {},
 };
 
 export default memo(ItemBasket);
