@@ -7,11 +7,17 @@
  * @param [locale] {String} Локаль (код языка)
  * @returns {String}
  */
-export function plural(value, variants = {}, locale = 'ru-RU') {
+export function plural(
+  value,
+  variants = {},
+  locale = 'ru-RU'
+) {
   // Получаем фурму кодовой строкой: 'zero', 'one', 'two', 'few', 'many', 'other'
   // В русском языке 3 формы: 'one', 'few', 'many', и 'other' для дробных
   // В английском 2 формы: 'one', 'other'
-  const key = new Intl.PluralRules(locale).select(value);
+  const key = new Intl.PluralRules(locale).select(
+    value
+  );
   // Возвращаем вариант по ключу, если он есть
   return variants[key] || '';
 }
@@ -30,6 +36,58 @@ export function codeGenerator(start = 0) {
  * @param options {Object}
  * @returns {String}
  */
-export function numberFormat(value, locale = 'ru-RU', options = {}) {
-  return new Intl.NumberFormat(locale, options).format(value);
+export function numberFormat(
+  value,
+  locale = 'ru-RU',
+  options = {}
+) {
+  return new Intl.NumberFormat(
+    locale,
+    options
+  ).format(value);
+}
+
+/**
+ * Создание дерева категорий товаров
+ * @param data {Array}
+ * @returns {Array}
+ */
+export function createCategoriesTree(data) {
+  const obj = Object.fromEntries(
+    data.map((item) => [
+      item._id,
+      {
+        ...item,
+        children: [],
+      },
+    ])
+  );
+
+  const tree = Object.values(obj).filter(
+    (item) =>
+      !obj[item.parent?._id]?.children.push(item)
+  );
+
+  function recursion(arr, result, nesting = 0) {
+    arr.forEach((category) => {
+      result.push({
+        value: category._id,
+        title: `${'-'.repeat(nesting)} ${
+          category.title
+        }`,
+      });
+      if (category.children.length > 0) {
+        recursion(
+          category.children,
+          result,
+          nesting + 1
+        );
+      }
+    });
+    return result;
+  }
+
+  const result = [{ value: '', title: 'Все' }];
+
+  return recursion(tree, result);
 }

@@ -1,26 +1,66 @@
-import {useCallback, useContext, useEffect, useState} from 'react';
-import {Routes, Route} from 'react-router-dom';
-import useSelector from "../hooks/use-selector";
-import Main from "./main";
-import Basket from "./basket";
-import Article from "./article";
+import {
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
+import useSelector from '../hooks/use-selector';
+import Main from './main';
+import Basket from './basket';
+import Article from './article';
+import User from './user';
+import Login from './login';
+import useInit from '../hooks/use-init';
+import useStore from '../hooks/use-store';
 
 /**
  * Приложение
  * @returns {React.ReactElement}
  */
 function App() {
+  const store = useStore();
 
-  const activeModal = useSelector(state => state.modals.name);
+  const select = useSelector((state) => ({
+    loggedIn: state.user.loggedIn,
+    activeModal: state.modals.name,
+  }));
+
+  useInit(
+    () => {
+      store.actions.user.getCurrentUser();
+    },
+    [select.loggedIn],
+    true
+  );
 
   return (
     <>
       <Routes>
-        <Route path={''} element={<Main/>}/>
-        <Route path={'/articles/:id'} element={<Article/>}/>
+        <Route path={''} element={<Main />} />
+        <Route
+          path={'/articles/:id'}
+          element={<Article />}
+        />
+        <Route
+          path={'/login'}
+          element={<Login />}
+        />
+        <Route
+          path={'/user/:id'}
+          element={
+            select.loggedIn ? (
+              <User />
+            ) : (
+              <Navigate
+                to='/login'
+                replace></Navigate>
+            )
+          }
+        />
       </Routes>
 
-      {activeModal === 'basket' && <Basket/>}
+      {select.activeModal === 'basket' && (
+        <Basket />
+      )}
     </>
   );
 }
