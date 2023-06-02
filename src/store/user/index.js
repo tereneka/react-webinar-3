@@ -22,54 +22,48 @@ class UserState extends StoreModule {
   async login({ login, password }) {
     this.setState({
       ...this.getState(),
+      loginErr: '',
       waiting: true,
     });
 
-    try {
-      const response = await fetch(
-        `/api/v1/users/sign`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            login,
-            password,
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      const json = await response.json();
-
-      if (json.result.token) {
-        // Пользователь успешно авторизовался
-        localStorage.setItem(
-          'jwt',
-          json.result.token
-        );
-        this.setState(
-          {
-            data: json.result.user,
-            loggedIn: true,
-            loginErr: '',
-            waiting: false,
-          },
-          'Пользователь успешно авторизовался'
-        );
-      } else if (json.error) {
-        // Ошибка при авторизации
-        this.setState({
-          data: {},
-          loggedIn: false,
-          loginErr: json.error.message,
-          waiting: false,
-        });
+    const response = await fetch(
+      `/api/v1/users/sign`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          login,
+          password,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }
-    } catch (e) {
+    );
+    const json = await response.json();
+
+    if (json.result?.token) {
+      // Пользователь успешно авторизовался
+      localStorage.setItem(
+        'jwt',
+        json.result.token
+      );
+      this.setState(
+        {
+          data: json.result.user,
+          loggedIn: true,
+          loginErr: '',
+          waiting: false,
+        },
+        'Пользователь успешно авторизовался'
+      );
+    } else if (json.error) {
+      // Ошибка при авторизации
       this.setState({
         data: {},
         loggedIn: false,
-        loginErr: e.message,
+        loginErr:
+          json.error.data?.issues[0].message ||
+          json.error.message,
         waiting: false,
       });
     }

@@ -3,7 +3,7 @@ import { useForm } from '../../hooks/use-form';
 import PropTypes from 'prop-types';
 import './style.css';
 
-function LoginForm({ onSubmit, t }) {
+function LoginForm({ onSubmit, error, t }) {
   const {
     values,
     errMessages,
@@ -67,7 +67,14 @@ function LoginForm({ onSubmit, t }) {
           {errMessages.password}
         </span>
 
-        <span className='LoginForm-serverErr'></span>
+        <span
+          className={`${
+            error
+              ? 'LoginForm-serverErr LoginForm-serverErr_visible'
+              : 'LoginForm-serverErr'
+          }`}>
+          {error}
+        </span>
         <button
           type='submit'
           disabled={!isFormValid}>

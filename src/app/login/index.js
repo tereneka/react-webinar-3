@@ -8,11 +8,20 @@ import LocaleSelect from '../../containers/locale-select';
 import LoginForm from '../../components/login-form';
 import useStore from '../../hooks/use-store';
 import { useNavigate } from 'react-router-dom';
+import useSelector from '../../hooks/use-selector';
+import useInit from '../../hooks/use-init';
+import Spinner from '../../components/spinner';
 
 function Login() {
   const store = useStore();
   const { t } = useTranslate();
   const navigate = useNavigate();
+
+  const select = useSelector((state) => ({
+    error: state.user.loginErr,
+    loggedIn: state.user.loggedIn,
+    waiting: state.user.waiting,
+  }));
 
   const callbacks = {
     // Авторизация пользователя
@@ -20,11 +29,20 @@ function Login() {
       (e, values) => {
         e.preventDefault();
         store.actions.user.login(values);
-        navigate('/');
       },
-      [store]
+      [store, select.loggedIn]
     ),
   };
+
+  useInit(
+    () => {
+      if (select.loggedIn) {
+        navigate('/');
+      }
+    },
+    [select.loggedIn],
+    true
+  );
 
   return (
     <PageLayout>
@@ -33,10 +51,13 @@ function Login() {
         <LocaleSelect />
       </Head>
       <Navigation />
-      <LoginForm
-        onSubmit={callbacks.onLogin}
-        t={t}
-      />
+      <Spinner active={select.waiting}>
+        <LoginForm
+          onSubmit={callbacks.onLogin}
+          error={select.error}
+          t={t}
+        />
+      </Spinner>
     </PageLayout>
   );
 }
