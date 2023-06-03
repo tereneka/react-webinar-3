@@ -4,18 +4,10 @@ import PropTypes from 'prop-types';
 import './style.css';
 
 function LoginForm({ onSubmit, error, t }) {
-  const {
-    values,
-    errMessages,
-    isTouched,
-    handleChange,
-  } = useForm(['login', 'password']);
-
-  const isFormValid =
-    !Object.values(errMessages).some(
-      (i) => !!i
-    ) &&
-    !Object.values(isTouched).some((i) => !i);
+  const { values, handleChange } = useForm([
+    'login',
+    'password',
+  ]);
 
   return (
     <div className='LoginForm'>
@@ -43,10 +35,6 @@ function LoginForm({ onSubmit, error, t }) {
           maxLength={20}
         />
 
-        <span className='LoginForm-err'>
-          {errMessages.login}
-        </span>
-
         <label
           className='LoginForm-label'
           htmlFor='password'>
@@ -62,9 +50,6 @@ function LoginForm({ onSubmit, error, t }) {
           required
           minLength={6}
         />
-        <span className='LoginForm-err'>
-          {errMessages.password}
-        </span>
 
         <span
           className={`${
