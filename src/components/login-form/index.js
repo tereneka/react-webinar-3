@@ -25,8 +25,7 @@ function LoginForm({ onSubmit, error, t }) {
       <form
         className='LoginForm-form'
         name='login'
-        onSubmit={(e) => onSubmit(e, values)}
-        noValidate>
+        onSubmit={(e) => onSubmit(e, values)}>
         <label
           className='LoginForm-label'
           htmlFor='login'>
@@ -75,9 +74,7 @@ function LoginForm({ onSubmit, error, t }) {
           }`}>
           {error}
         </span>
-        <button
-          type='submit'
-          disabled={!isFormValid}>
+        <button type='submit'>
           {t('login.enter')}
         </button>
       </form>
