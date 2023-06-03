@@ -20,7 +20,7 @@ class CatalogState extends StoreModule {
       },
       count: 0,
       waiting: false,
-      categories: [],
+      // categories: [],
     };
   }
 
@@ -58,7 +58,7 @@ class CatalogState extends StoreModule {
       },
       true
     );
-    await this.getCategories();
+    // await this.getCategories();
   }
 
   /**
@@ -145,20 +145,20 @@ class CatalogState extends StoreModule {
     );
   }
 
-  async getCategories() {
-    const response = await fetch(
-      '/api/v1/categories?fields=_id,title,parent(_id)&limit=*'
-    );
-    const json = await response.json();
+  // async getCategories() {
+  //   const response = await fetch(
+  //     '/api/v1/categories?fields=_id,title,parent(_id)&limit=*'
+  //   );
+  //   const json = await response.json();
 
-    this.setState(
-      {
-        ...this.getState(),
-        categories: json.result.items,
-      },
-      'Загружен список категорий товаров из АПИ'
-    );
-  }
+  //   this.setState(
+  //     {
+  //       ...this.getState(),
+  //       categories: json.result.items,
+  //     },
+  //     'Загружен список категорий товаров из АПИ'
+  //   );
+  // }
 }
 
 export default CatalogState;

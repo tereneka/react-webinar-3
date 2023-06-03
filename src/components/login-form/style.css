@@ -21,6 +21,12 @@
   line-height: 18px;
 }
 
+.LoginForm-input {
+  font-size: 16px;
+  line-height: 18px;
+  padding: 3px;
+}
+
 .LoginForm-err {
   min-height: 20px;
   color: #ff0000;

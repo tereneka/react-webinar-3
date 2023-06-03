@@ -20,7 +20,7 @@ function App() {
   const store = useStore();
 
   const select = useSelector((state) => ({
-    loggedIn: state.user.loggedIn,
+    loggedIn: state.auth.loggedIn,
     activeModal: state.modals.name,
   }));
 

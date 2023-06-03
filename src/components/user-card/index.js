@@ -5,7 +5,7 @@ import './style.css';
 
 function UserCard({ user, t }) {
   const cn = bem('UserCard');
-  console.log(user);
+
   return (
     <div className={cn()}>
       <h2 className={cn('title')}>

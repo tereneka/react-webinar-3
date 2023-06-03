@@ -7,7 +7,10 @@ import useTranslate from '../../hooks/use-translate';
 import LocaleSelect from '../../containers/locale-select';
 import LoginForm from '../../components/login-form';
 import useStore from '../../hooks/use-store';
-import { useNavigate } from 'react-router-dom';
+import {
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import useSelector from '../../hooks/use-selector';
 import useInit from '../../hooks/use-init';
 import Spinner from '../../components/spinner';
@@ -16,11 +19,12 @@ function Login() {
   const store = useStore();
   const { t } = useTranslate();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const select = useSelector((state) => ({
-    error: state.user.loginErr,
-    loggedIn: state.user.loggedIn,
-    waiting: state.user.waiting,
+    error: state.auth.loginErr,
+    loggedIn: state.auth.loggedIn,
+    waiting: state.auth.waiting,
   }));
 
   const callbacks = {
@@ -28,7 +32,7 @@ function Login() {
     onLogin: useCallback(
       (e, values) => {
         e.preventDefault();
-        store.actions.user.login(values);
+        store.actions.auth.login(values);
       },
       [store, select.loggedIn]
     ),
@@ -41,6 +45,14 @@ function Login() {
       }
     },
     [select.loggedIn],
+    true
+  );
+
+  useInit(
+    () => {
+      store.actions.auth.resetLoginError();
+    },
+    [location],
     true
   );
 

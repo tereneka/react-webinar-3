@@ -11,7 +11,7 @@ function LoginBar() {
   const navigate = useNavigate();
 
   const select = useSelector((state) => ({
-    loggedIn: state.user.loggedIn,
+    loggedIn: state.auth.loggedIn,
     userData: state.user.data,
   }));
 
@@ -23,7 +23,7 @@ function LoginBar() {
     ),
     // Отмена авториазции пользователя
     onLogout: useCallback(
-      () => store.actions.user.logout(),
+      () => store.actions.auth.logout(),
       [store]
     ),
   };

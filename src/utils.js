@@ -72,7 +72,7 @@ export function createCategoriesTree(data) {
     arr.forEach((category) => {
       result.push({
         value: category._id,
-        title: `${'-'.repeat(nesting)} ${
+        title: `${'- '.repeat(nesting)}${
           category.title
         }`,
       });
