@@ -1,0 +1,17 @@
+.Container {
+}
+
+.Container_padding_small {
+  padding: 10px 20px;
+}
+
+.Container_padding_medium {
+  padding: 20px;
+}
+
+.Container_padding_large {
+  padding: 20px 40px;
+}
+
+.Container-item {
+}

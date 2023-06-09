@@ -1,0 +1,43 @@
+.CommentForm {
+  margin-top: 30px;
+}
+
+.CommentForm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.CommentForm-label {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.CommentForm-input {
+  min-height: 80px;
+  resize: none;
+  font-size: 14px;
+}
+
+.CommentForm-btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+.CommentForm-login {
+  margin: 30px 0;
+}
+
+.CommentForm-login-link {
+  color: #0087e9;
+}
+
+.CommentForm-login-btn {
+  color: #666666;
+  border: none;
+  background: inherit;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 16px;
+}
