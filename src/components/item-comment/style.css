@@ -12,12 +12,17 @@
   font-weight: 700;
 }
 
+.ItemComment-author_current {
+  color: #666666;
+}
+
 .ItemComment-date {
   color: #666666;
 }
 
 .ItemComment-text {
   font-size: 14px;
+  word-wrap: break-word;
 }
 
 .ItemComment-btn {

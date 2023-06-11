@@ -17,12 +17,34 @@ export default function commentsToTree(
   };
 
   for (const item of list) {
-    trees[item[key]] = item;
-    trees[item[key]].children = [];
+    if (item[key]) {
+      trees[item[key]] = item;
+      trees[item[key]].children = [];
 
-    trees[item.parent[key]]?.children.push(
-      trees[item[key]]
-    );
+      trees[item.parent[key]]?.children.push(
+        trees[item[key]]
+      );
+    }
   }
-  return trees[articleId].children;
+
+  const result = trees[articleId].children;
+
+  addLevel(result);
+
+  return result;
+}
+
+/**
+ * Добавляем уровень вложенности.
+ * @param tree {Array} Иерархия - список узлов со свойством children.
+ * @param [level] {Number} Начальный уровень вложенности.
+ * @returns {void}
+ */
+function addLevel(tree, level = 0) {
+  for (const item of tree) {
+    item.level = level;
+    if (item.children?.length) {
+      addLevel(item.children, level + 1);
+    }
+  }
 }

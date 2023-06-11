@@ -72,7 +72,7 @@ export default {
         dispatch({
           type: 'comments/create-success',
           payload: {
-            data: res.data.result._id,
+            data: res.data.result,
           },
         });
       } catch (e) {
@@ -81,6 +81,15 @@ export default {
           type: 'comments/create-error',
         }); //@todo текст ошибки сохранить
       }
+    };
+  },
+
+  /**
+   * Сброс нового комментария
+   */
+  resetNewComment: () => {
+    return {
+      type: 'comment/reset',
     };
   },
 };

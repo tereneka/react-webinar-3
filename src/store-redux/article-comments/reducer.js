@@ -4,7 +4,7 @@ const initialState = {
   count: 0,
   currentForm: 'comment',
   waiting: false, // признак ожидания загрузки
-  newComment: '',
+  newComment: [],
 };
 
 // Обработчик действий
@@ -43,7 +43,16 @@ function reducer(state = initialState, action) {
     case 'comments/create-success':
       return {
         ...state,
-        newComment: action.payload.data,
+        newComment: [
+          ...state.newComment,
+          action.payload.data,
+        ],
+      };
+
+    case 'comment/reset':
+      return {
+        ...state,
+        newComment: [],
       };
 
     default:

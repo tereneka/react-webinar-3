@@ -1,11 +1,6 @@
-import {
-  memo,
-  useCallback,
-  useMemo,
-} from 'react';
+import { memo, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import useStore from '../../hooks/use-store';
-import useSelector from '../../hooks/use-selector';
 import useTranslate from '../../hooks/use-translate';
 import useInit from '../../hooks/use-init';
 import PageLayout from '../../components/page-layout';
@@ -21,8 +16,6 @@ import {
 } from 'react-redux';
 import shallowequal from 'shallowequal';
 import articleActions from '../../store-redux/article/actions';
-import commentsActions from '../../store-redux/article-comments/actions';
-import commentsToTree from '../../utils/comments-to-tree';
 import ArticleComments from '../../containers/article-comments';
 
 function Article() {
@@ -33,14 +26,11 @@ function Article() {
   useInit(() => {
     //store.actions.article.load(params.id);
     dispatch(articleActions.load(params.id));
-    dispatch(commentsActions.load(params.id));
   }, [params.id]);
   const select = useSelectorRedux(
     (state) => ({
       article: state.article.data,
       waiting: state.article.waiting,
-      comments: state.articleComments.data,
-      commentsCount: state.articleComments.count,
     }),
     shallowequal
   ); // Нужно указать функцию для сравнения свойства объекта, так как хуком вернули объект
@@ -53,15 +43,6 @@ function Article() {
       [store]
     ),
   };
-
-  const comments = useMemo(
-    () =>
-      commentsToTree(
-        select.comments,
-        select.article._id
-      ),
-    [select.comments]
-  );
 
   return (
     <PageLayout>

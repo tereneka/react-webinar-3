@@ -1,27 +1,48 @@
-import { memo, useState } from 'react';
+import {
+  forwardRef,
+  memo,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 import './style.css';
-import { Link } from 'react-router-dom';
+import {
+  Link,
+  useLocation,
+} from 'react-router-dom';
 
-function CommentForm({
-  isComment,
-  label,
-  exists,
-  closeForm,
-  onSubmit,
-}) {
+function CommentForm(
+  {
+    isComment,
+    label,
+    exists,
+    closeForm,
+    onSubmit,
+  },
+  ref
+) {
   const cn = bem('CommentForm');
+
+  const location = useLocation();
 
   const [value, setValue] = useState('');
 
   const callbacks = {
     closeForm: () => closeForm(),
-    onSubmit: (e) => onSubmit(e, value),
+    onSubmit: (e) => {
+      if (value.trim().length > 0) {
+        onSubmit(e, value);
+      }
+      e.preventDefault();
+      setValue('');
+    },
   };
 
   return (
-    <div className={cn()}>
+    <div
+      className={`${cn()} ${
+        isComment ? '' : cn() + '_nested'
+      }`}>
       {exists ? (
         <form
           className={cn('form')}
@@ -35,6 +56,8 @@ function CommentForm({
             onChange={(e) =>
               setValue(e.target.value)
             }
+            ref={ref}
+            required
           />
           <div className={cn('btn-group')}>
             <button type='submit'>
@@ -52,7 +75,9 @@ function CommentForm({
         <div className={cn('login')}>
           <Link
             className={cn('login-link')}
-            to='/login'>
+            to='/login'
+            state={{ back: location.pathname }}
+            ref={ref}>
             Войдите
           </Link>
           {`, чтобы иметь возможность ${
@@ -73,6 +98,8 @@ function CommentForm({
   );
 }
 
+export default memo(forwardRef(CommentForm));
+
 CommentForm.propTypes = {
   isComment: PropTypes.bool,
   label: PropTypes.string,
@@ -85,5 +112,3 @@ CommentForm.defaultProps = {
   closeForm: () => {},
   onSubmit: () => {},
 };
-
-export default memo(CommentForm);

@@ -8,23 +8,13 @@ function CommentsList({
   isNested,
 }) {
   return (
-    <div className='CommentsList'>
+    <div
+      className={`CommentsList ${
+        isNested ? 'CommentsList_nested' : ''
+      }`}>
       {list.map((item) => (
-        <div
-          key={item._id}
-          className={`CommentsList-item ${
-            isNested
-              ? 'CommentsList-item_nested'
-              : ''
-          }`}>
+        <div key={item._id}>
           {renderItem(item)}
-          {item.children.length > 0 && (
-            <CommentsList
-              list={item.children}
-              renderItem={renderItem}
-              isNested={true}
-            />
-          )}
         </div>
       ))}
     </div>

@@ -38,21 +38,33 @@ function ArticleComments() {
     shallowequal
   );
 
-  const exists = useSelector(
-    (state) => state.session.exists
+  const { exists, user } = useSelector(
+    (state) => state.session
   );
 
   useInit(() => {
     dispatch(commentsActions.load(params.id));
-  }, [params.id, select.newComment]);
+    dispatch(commentsActions.resetNewComment());
+  }, [params.id]);
 
   const comments = useMemo(
     () =>
       commentsToTree(
-        select.comments,
+        [
+          ...select.comments,
+          ...select.newComment.map((comment) => ({
+            ...comment,
+            author: {
+              _id: user._id,
+              profile: {
+                name: user.profile?.name,
+              },
+            },
+          })),
+        ],
         select.article._id
       ),
-    [select.comments]
+    [select.comments, select.newComment]
   );
 
   const callbacks = {
@@ -86,11 +98,20 @@ function ArticleComments() {
             select.currentForm === item._id
           }
           exists={exists}
+          isCurrentUser={
+            item.author._id === user._id
+          }
           openForm={callbacks.openForm}
           onSubmit={callbacks.onSubmit}
+          renderItem={renders.itemComments}
         />
       ),
-      [select.currentForm]
+      [
+        select.currentForm,
+        exists,
+        select.comments,
+        select.newComment,
+      ]
     ),
   };
 
